@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 
 public class Main {
     public static void main(String[] args){
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e){
@@ -15,24 +16,23 @@ public class Main {
         String pass = "root";
         String url = "jdbc:mysql://localhost:3306/mysystem4";
 
-        try {
-            Connection conn = DriverManager.getConnection(url,user,pass);
+
+        String sql = "select * from funciones";
+        try (Connection conn = DriverManager.getConnection(url,user,pass);
+             Statement statement =conn.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
             System.out.println("Conexión exitosa");
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from funciones");
 
-            resultSet.next();
-            int idSala = resultSet.getInt(1);
-            Date fecha = resultSet.getDate(2);
-            System.out.println("id: "+idSala);
-            System.out.println("fecha: "+fecha);
-
-
+            while( resultSet.next()){
+                int id = resultSet.getInt(1);
+                Date fecha = resultSet.getDate(2);
+                System.out.println("id: "+id+ "   |   fecha: "+fecha);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 }
 
