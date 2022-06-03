@@ -4,6 +4,7 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+//Para que corre el programa asegurense de poner el Main correcto en la configuracion de Run/Debug
 public class Main {
     public static void main(String[] args){
 
